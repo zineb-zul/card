@@ -141,26 +141,89 @@ if (mysqli_num_rows($query2) == 0) {
     </section>
 
     <!-- JS -->
-    <script>
-        // Lecture audio
-        const audio = document.getElementById('romantic-audio');
-        const playBtn = document.getElementById('play-audio');
-        playBtn.addEventListener('click', () => {
-            audio.play();
-            playBtn.style.display = 'none';
-        });
+    <!-- Popup Confirmation -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <h2>Veux-tu confirmer ta présence ?</h2>
+        <div class="buttons">
+            <button id="oui-btn">Oui</button>
+            <button id="non-btn">Non</button>
+        </div>
+    </div>
+</div>
 
-        // Animation coeurs
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.animationDuration = (2 + Math.random() * 2) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 3000);
-        }
+<style>
+/* Popup background */
+.popup {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
 
-        setInterval(createHeart, 300);
-    </script>
+/* Popup box */
+.popup-content {
+    background: #fff;
+    padding: 30px 50px;
+    border-radius: 12px;
+    text-align: center;
+    font-family: sans-serif;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* Buttons */
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 15px 35px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+/* Oui button bigger and highlighted */
+#oui-btn {
+    background-color: #ff4d6d;
+    color: #fff;
+    font-weight: bold;
+    transform: scale(1.2);
+}
+
+/* Non button style */
+#non-btn {
+    background-color: #aaa;
+    color: #fff;
+    position: relative;
+}
+
+/* Non button escape animation */
+</style>
+
+<script>
+// Non button se déplace si on essaie de cliquer dessus
+const nonBtn = document.getElementById('non-btn');
+nonBtn.addEventListener('mouseenter', () => {
+    const x = Math.random() * 150 - 75; // se déplace horizontal
+    const y = Math.random() * 50 - 25;  // se déplace vertical
+    nonBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+// Oui button click
+const ouiBtn = document.getElementById('oui-btn');
+ouiBtn.addEventListener('click', () => {
+    if(confirm("Es-tu sûr de vouloir cliquer sur Oui ?")) {
+        alert("Merci d'avoir confirmé ta présence ! ❤️");
+        document.getElementById('popup').style.display = 'none';
+    }
+});
+</script>
 </body>
 </html>
